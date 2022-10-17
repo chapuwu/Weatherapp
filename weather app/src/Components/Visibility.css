@@ -1,0 +1,17 @@
+.visibility {
+    background-color: rgba(10, 10, 34);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border: 1px solid rgb(87, 87, 87);
+    border-radius: 5px;
+}
+
+.visibility p {
+    text-align: center;
+}
+
+.visibility h1 {
+    text-align: center;
+}

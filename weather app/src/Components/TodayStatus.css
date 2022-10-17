@@ -1,0 +1,15 @@
+.today-status {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 25px;
+    row-gap: 25px;
+    height: 45%;
+    width: 60%;
+}
+
+.container-today-status {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
