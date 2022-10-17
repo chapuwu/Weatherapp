@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react'
 import './App.css'
 import Weather from './Components/Weather'
 import Search from './Components/Search'
@@ -5,6 +6,20 @@ import TodayStatus from './Components/TodayStatus'
 import Today from './Components/Today'
 
 function App() {
+    const [country, setCountry] = useState('')
+
+    const initialURL = 'https://pokeapi.co/api/v2/pokemon/ditto' // URL API
+
+    function dataAPI(url) {
+        fetch(url)
+            .then((res) => res.json())
+            .then((data) => setCountry(data.name))
+    } // esta funcion agarra la URL API, lo convierte a json y lo imprime en consola
+
+    useEffect(() => {
+        dataAPI(initialURL)
+    }, []) // para renderizar la informacion de la API
+
     return (
         <div className='App'>
             <div className='container-today'>
