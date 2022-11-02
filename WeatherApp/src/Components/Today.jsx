@@ -18,7 +18,9 @@ const icons = {
     Snow: snow,
 }
 
-export default function Today({ city, iconWeather, celsius, weatherName, dayNumber, celsiusOrFahrenheit, searchCity }) {
+const weekName = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado']
+
+export default function Today({ month, city, celsius, weatherName, dayNumber, celsiusOrFahrenheit, weekDay }) {
     return (
         <div className='container'>
             <div className='today'>
@@ -32,7 +34,9 @@ export default function Today({ city, iconWeather, celsius, weatherName, dayNumb
                 </div>
                 <div className='dia-hoy'>
                     <p>Hoy,</p>
-                    <p>Jueves {dayNumber} OCT</p>
+                    <p>
+                        {weekName[weekDay]} {dayNumber} {month}
+                    </p>
                 </div>
                 <div className='ciudad-hoy'>
                     <p>{city}</p>

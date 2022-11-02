@@ -20,8 +20,11 @@ function App() {
     const [dayNumber, setDayNumber] = useState(0)
     const [searchCity, setSearchCity] = useState('')
     const [celsiusOrFahrenheit, setCelsiusOrFahrenheit] = useState(false)
-    const [tomorrow, setTomorrow] = useState('')
     const [weatherNameTomorrow, setWeatherNameTomorrow] = useState('')
+    const [month, setMonth] = useState('')
+    const [dayNumberTomorrow, setdayNumberTomorrow] = useState(0)
+    const [weekDay, setWeekDay] = useState(0)
+    const [weekNumberTomorrow, setWeekNumberTomorrow] = useState(0)
 
     const initialURL = `http://api.openweathermap.org/data/2.5/forecast?q=${searchCity}&appid=ec11c748879d669b48c60f6aab8f67d1&units=metric` // URL API
 
@@ -40,10 +43,15 @@ function App() {
                 setPressure(data.list[0].main.pressure)
                 setMaxTomorrowWeather(parseInt(data.list[1].main.temp_max))
                 setMinTomorrowWeather(parseInt(data.list[1].main.temp_min))
-                setDayNumber(data.list[0].dt_txt.slice(8, 10))
-                setTomorrow(data.list[8].weather.main)
                 setWeatherNameTomorrow(data.list[8].weather[0].main)
+                setMonth(
+                    new Date(data.list[0].dt_txt).toLocaleString(navigator.language, { month: 'short' }).toUpperCase(),
+                )
+                setdayNumberTomorrow(new Date(data.list[0].dt_txt).getDate())
+                setWeekNumberTomorrow(new Date(data.list[0].dt_txt).getDay())
             })
+        setDayNumber(new Date().getDate())
+        setWeekDay(new Date().getDay())
     } // esta funcion agarra la URL API, lo convierte a json y lo imprime en consola
 
     function celsiusToFahrenheit() {
@@ -77,6 +85,8 @@ function App() {
                     setCelsiusOrFahrenheit={setCelsiusOrFahrenheit}
                     celsiusOrFahrenheit={celsiusOrFahrenheit}
                     searchCity={searchCity}
+                    month={month}
+                    weekDay={weekDay}
                 />
             </div>
             <div className='container-body'>
@@ -104,6 +114,9 @@ function App() {
                     maxTomorrowWeather={maxTomorrowWeather}
                     minTomorrowWeather={minTomorrowWeather}
                     weatherNameTomorrow={weatherNameTomorrow}
+                    dayNumberTomorrow={dayNumberTomorrow}
+                    month={month}
+                    weekNumberTomorrow={weekNumberTomorrow}
                 />
                 <h2>Clima de Hoy</h2>
                 <TodayStatus humidity={humidity} windSpeed={windSpeed} visibility={visibility} pressure={pressure} />
