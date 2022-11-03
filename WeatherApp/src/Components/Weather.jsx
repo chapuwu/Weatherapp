@@ -7,17 +7,11 @@ import showers from '../icons/showers.svg'
 import sleet from '../icons/sleet.svg'
 import WeatherHTML from './WeatherHTML'
 
-export default function Weather({
-    month,
-    maxTomorrowWeather,
-    minTomorrowWeather,
-    weatherNameTomorrow,
-    dayNumberTomorrow,
-    weekNumberTomorrow,
-}) {
+export default function Weather({ nextDays }) {
     return (
         <div className='container-lastdays'>
-            <WeatherHTML
+            {}
+            {/* <WeatherHTML
                 month={month}
                 maxTomorrowWeather={maxTomorrowWeather}
                 minTomorrowWeather={minTomorrowWeather}
@@ -25,6 +19,22 @@ export default function Weather({
                 dayNumberTomorrow={dayNumberTomorrow}
                 weekNumberTomorrow={weekNumberTomorrow}
             />
+            <WeatherHTML
+                month={month}
+                maxTomorrowWeather={secondMaxCelsius}
+                minTomorrowWeather={secondMinCelsius}
+                weatherNameTomorrow={secondWeather}
+                dayNumberTomorrow={secondDateNumber}
+                weekNumberTomorrow={secondWeekName}
+            />
+            <WeatherHTML
+                month={month}
+                maxTomorrowWeather={thirdMaxCelsius}
+                minTomorrowWeather={thirdMinCelsius}
+                weatherNameTomorrow={thirdWeatherName}
+                dayNumberTomorrow={thirdDayNumber}
+                weekNumberTomorrow={thirdDayName}
+            /> */}
         </div>
     )
 }

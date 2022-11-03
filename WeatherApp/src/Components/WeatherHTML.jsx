@@ -29,10 +29,7 @@ export default function WeatherHTML({
                 {weekName[weekNumberTomorrow]}, {dayNumberTomorrow} {month}
             </p>
             <img src={iconsList[weatherNameTomorrow]} alt='' className='icon' />
-            <div className='grados'>
-                <p className='maximum'>{maxTomorrowWeather}°C</p>
-                <p className='minimum'>{minTomorrowWeather}°C</p>
-            </div>
+            <div className='grados'></div>
         </div>
     )
 }
