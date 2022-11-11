@@ -1,0 +1,24 @@
+.info-box {
+    background-color: rgba(10, 10, 34);
+    color: #fffc;
+    border: 1px solid rgb(87, 87, 87);
+    border-radius: 5px;
+    width: 35rem;
+    height: 10rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.info-box-title {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: normal;
+}
+
+.info-box-text {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: bold;
+}

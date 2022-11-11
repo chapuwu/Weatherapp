@@ -1,0 +1,23 @@
+.search-container {
+    background-color: rgb(10, 10, 34);
+    width: 25rem;
+    height: 2rem;
+    border-radius: 25px;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 20px;
+    margin: 1rem;
+}
+
+.search-container input {
+    font-size: 1rem;
+    background-color: #0000;
+    color: #fff;
+    outline: none;
+    border: none;
+}
+
+.search-container img {
+    height: 80%;
+    cursor: pointer;
+}

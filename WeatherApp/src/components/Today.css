@@ -1,0 +1,39 @@
+.today {
+    background-color: rgb(14, 14, 48);
+    padding: 5rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.today * {
+    margin: 0;
+    padding: 0;
+}
+
+.today img {
+    height: 120px;
+}
+
+.degrees {
+    color: #fff;
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+.degrees > span {
+    font-size: 1.5rem;
+    vertical-align: top;
+}
+
+.today .weather-name {
+    font-size: 4rem;
+    color: rgba(255, 255, 255, 0.671);
+}
+
+.today-date,
+.today-city {
+    color: rgba(255, 255, 255, 0.671);
+    font-size: 1.5rem;
+}

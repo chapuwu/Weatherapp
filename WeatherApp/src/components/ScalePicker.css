@@ -1,0 +1,27 @@
+.scale-picker-container {
+    display: flex;
+    width: 7rem;
+    justify-content: space-between;
+}
+
+.scale-picker-button {
+    border: none;
+    font-size: 1.6rem;
+    color: rgb(255, 196, 0, 0.685);
+    background-color: #0000;
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 5px;
+    width: 45px;
+    aspect-ratio: 1;
+}
+
+.scale-picker-button:hover {
+    color: rgb(255, 196, 0);
+    background-color: #fff1;
+    transition: all 300ms ease-in-out;
+}
+
+.picker-selected {
+    color: rgb(255, 229, 143);
+}

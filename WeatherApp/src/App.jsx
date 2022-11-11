@@ -1,127 +1,73 @@
 import React, { useEffect, useState } from 'react'
 import './App.css'
-import Weather from './Components/Weather'
-import Search from './Components/Search'
-import TodayStatus from './Components/TodayStatus'
-import Today from './Components/Today'
+import Weather from './components/Weather'
+import Search from './components/Search'
+import TodayStatus from './components/TodayStatus'
+import Today from './components/Today'
+import ScalePicker from './components/ScalePicker'
 import { kelvinToCelsius, kelvinToFahrenheit } from './utils/tempConvert'
 import { getNextDaysInfo } from './utils/dates'
 
 function App() {
-    const [city, setCity] = useState('')
-
-    const [temperature, setTemperature] = useState(0)
+    // user input
     const [scale, setScale] = useState('celsius')
 
-    const [iconWeather, setIconWeather] = useState('')
-    const [timeZone, setTimeZone] = useState(0)
-    const [weatherName, setWeatherName] = useState('')
-    const [humidity, setHumidity] = useState('')
-    const [windSpeed, setWindSpeed] = useState(0)
-    const [visibility, setVisibility] = useState(0)
-    const [pressure, setPressure] = useState(0)
-    const [maxTomorrowWeather, setMaxTomorrowWeather] = useState(0)
-    const [minTomorrowWeather, setMinTomorrowWeather] = useState(0)
-    const [searchCity, setSearchCity] = useState('New York')
-    const [weatherNameTomorrow, setWeatherNameTomorrow] = useState('')
-    const [dayNumberTomorrow, setdayNumberTomorrow] = useState(0)
-    const [weekNumberTomorrow, setWeekNumberTomorrow] = useState(0)
-    const [secondWeather, setSecondWeather] = useState('')
-    const [secondDateNumber, setSecondDateNumber] = useState('')
-    const [secondWeekName, setSecondWeekName] = useState('')
-    const [secondMinCelsius, setSecondMinCelsius] = useState(0)
-    const [secondMaxCelsius, setSecondMaxCelsius] = useState(0)
-    const [thirdDayName, setThirdDayName] = useState('')
-    const [thirdDayNumber, setThirdDayNumber] = useState('')
-    const [thirdWeatherName, setThirdWeatherName] = useState('')
-    const [thirdMinCelsius, setThirdMinCelsius] = useState(0)
-    const [thirdMaxCelsius, setThirdMaxCelsius] = useState(0)
+    // api response
+    const [todayInfo, setTodayInfo] = useState({})
+    const [nextDaysInfo, setNextDaysInfo] = useState([])
 
-    const initialURL = `http://api.openweathermap.org/data/2.5/forecast?q=${searchCity}&appid=ec11c748879d669b48c60f6aab8f67d1&` // URL API
+    function handleSearch(searchCity) {
+        const apiUrl = new URL('http://api.openweathermap.org/data/2.5/forecast')
+        apiUrl.searchParams.append('appid', 'ec11c748879d669b48c60f6aab8f67d1')
+        apiUrl.searchParams.append('q', searchCity)
 
-    function dataAPI(url) {
-        fetch(url)
+        fetch(apiUrl)
             .then((res) => res.json())
             .then((data) => {
-                getNextDaysInfo(data)
+                const today = data.list[0]
 
-                setCity(data.city.name)
-                setIconWeather(data.list[0].weather[0].main)
-                setTimeZone(data.city.timezone)
-                setTemperature(data.list[0].main.temp)
-                setWeatherName(data.list[0].weather[0].main)
-                setHumidity(data.list[0].main.humidity)
-                setWindSpeed(data.list[0].wind.speed)
-                setVisibility(data.list[0].visibility)
-                setPressure(data.list[0].main.pressure)
-                setMaxTomorrowWeather(parseInt(data.list[1].main.temp_max))
-                setMinTomorrowWeather(parseInt(data.list[1].main.temp_min))
-                setWeatherNameTomorrow(data.list[8].weather[0].main)
-                setdayNumberTomorrow(new Date(data.list[0].dt_txt).getDate())
-                setWeekNumberTomorrow(new Date(data.list[0].dt_txt).getDay())
-                setSecondWeather(data.list[9].weather[0].main)
-                setSecondDateNumber(new Date(data.list[9].dt_txt).getDate())
-                setSecondWeekName(new Date(data.list[9].dt_txt).getDay())
-                setSecondMinCelsius(parseInt(data.list[9].main.temp_min))
-                setSecondMaxCelsius(parseInt(data.list[9].main.temp_max))
-                setThirdDayName(new Date(data.list[17].dt_txt).getDay())
-                setThirdDayNumber(new Date(data.list[17].dt_txt).getDate())
-                setThirdWeatherName(data.list[17].weather[0].main)
-                setThirdMinCelsius(parseInt(data.list[17].main.temp_min))
-                setThirdMaxCelsius(parseInt(data.list[17].main.temp_max))
+                setTodayInfo({
+                    city: data.city.name,
+                    temperature: today.main.temp,
+                    weatherName: today.weather[0].main,
+                    humidity: today.main.humidity,
+                    windSpeed: today.wind.speed,
+                    visibility: today.visibility,
+                    pressure: today.main.pressure,
+                })
+
+                setNextDaysInfo(getNextDaysInfo(data))
             })
-    } // esta funcion agarra la URL API, lo convierte a json y lo imprime en consola
+    }
 
     useEffect(() => {
-        dataAPI(initialURL)
-    }, [searchCity]) // para renderizar la informacion de la API
+        // on mount, fetch new york by default
+        handleSearch('New York')
+    }, [])
 
     return (
         <div className='App'>
-            <div className='container-today'>
-                <Today
-                    iconWeather={iconWeather}
-                    city={city}
-                    timezone={timeZone}
-                    temperature={temperature}
-                    weatherName={weatherName}
-                    scale={scale}
-                    searchCity={searchCity}
+            <Today
+                city={todayInfo.city}
+                temperature={todayInfo.temperature}
+                weatherName={todayInfo.weatherName}
+                scale={scale}
+            />
+            <main>
+                <header className='header'>
+                    <h1 className='logo'>ClimaApp</h1>
+                    <ScalePicker scale={scale} setScale={setScale} />
+                </header>
+                <Search handleSearch={handleSearch} />
+                <Weather nextDaysInfo={nextDaysInfo} scale={scale} />
+                <h2 className='weather-today-title'>Hoy</h2>
+                <TodayStatus
+                    humidity={todayInfo.humidity}
+                    windSpeed={todayInfo.windSpeed}
+                    visibility={todayInfo.visibility}
+                    pressure={todayInfo.pressure}
                 />
-            </div>
-            <div className='container-body'>
-                <div className='buttons'>
-                    <h1 className='titulo'>ClimaApp</h1>
-                    <div className='container-centiheit'>
-                        <button className='centigradus' onClick={() => setScale('celsius')}>
-                            °C
-                        </button>
-                        <button className='fahrenheit' onClick={() => setScale('fahrenheit')}>
-                            °F
-                        </button>
-                    </div>
-                </div>
-                <Search setSearchCity={setSearchCity} searchCity={searchCity} />
-                <Weather
-                    maxTomorrowWeather={maxTomorrowWeather}
-                    minTomorrowWeather={minTomorrowWeather}
-                    weatherNameTomorrow={weatherNameTomorrow}
-                    dayNumberTomorrow={dayNumberTomorrow}
-                    weekNumberTomorrow={weekNumberTomorrow}
-                    secondDateNumber={secondDateNumber}
-                    secondWeather={secondWeather}
-                    secondMaxCelsius={secondMaxCelsius}
-                    secondWeekName={secondWeekName}
-                    secondMinCelsius={secondMinCelsius}
-                    thirdDayName={thirdDayName}
-                    thirdDayNumber={thirdDayNumber}
-                    thirdWeatherName={thirdWeatherName}
-                    thirdMinCelsius={thirdMinCelsius}
-                    thirdMaxCelsius={thirdMaxCelsius}
-                />
-                <h2>Clima de Hoy</h2>
-                <TodayStatus humidity={humidity} windSpeed={windSpeed} visibility={visibility} pressure={pressure} />
-            </div>
+            </main>
         </div>
     )
 }

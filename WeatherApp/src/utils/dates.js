@@ -16,10 +16,16 @@ export function getNextDaysInfo(data) {
         }
     })
 
-    // TODO: TERMINAR XD
-    return days.map()
+    return days.map(getDayInfo)
 }
 
 const getDay = (timestamp) => timestamp - (timestamp % 86400)
 
-export function getDayInfo(day) {}
+export function getDayInfo(day) {
+    return {
+        date: new Date(day[4].dt_txt),
+        weather: day[4].weather[0].main,
+        min: Math.min(...day.map((d) => d.main.temp_min)),
+        max: Math.max(...day.map((d) => d.main.temp_max)),
+    }
+}
