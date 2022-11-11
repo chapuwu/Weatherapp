@@ -1,0 +1,17 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    height: 30%;
+    width: 30%;
+}
+
+.inputs-p {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: blue;
+    height: 100%;
+    width: 100%;
+    border-radius: 7px;
+}
